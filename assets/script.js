@@ -17,6 +17,20 @@ const slides = [
 	}
 ]
 
+//ajoute les bullets points
+const dotContainer = document.querySelector('.dots');
+
+for (let i = 0; i < slides.length; i++) {
+	const span = document.createElement('span');
+	span.classList.add('dot');
+	dotContainer.appendChild(span);
+}
+
+// Sélection du premier point comme point initial
+const dots = dotContainer.querySelectorAll('.dot');
+dots[0].classList.add('dot_selected');
+
+
 // Sélectionner les flèches gauche et droite
 const arrowLeft = document.querySelector(".arrow_left");
 const arrowRight = document.querySelector(".arrow_right");
