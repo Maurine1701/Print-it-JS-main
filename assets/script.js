@@ -17,31 +17,73 @@ const slides = [
 	}
 ]
 
-//ajoute les bullets points
-const dotContainer = document.querySelector('.dots');
+// Sélectionner le conteneur de la bannière
+const banner = document.getElementById('banner');
 
-for (let i = 0; i < slides.length; i++) {
+// Sélectionner l'image de la bannière
+const bannerImage = banner.querySelector('.banner-img');
+
+// Sélectionner le paragraphe de la bannière
+const bannerText = banner.querySelector('p');
+
+// Sélectionner le conteneur des points
+const dotContainer = banner.querySelector('.dots');
+
+// Ajoute les points (bullets)
+for (let dot = 0; dot < slides.length; dot = dot + 1) {
 	const span = document.createElement('span');
 	span.classList.add('dot');
 	dotContainer.appendChild(span);
 }
 
-// Sélection du premier point comme point initial
+// Sélection du premier point comme point sur slider en cours
 const dots = dotContainer.querySelectorAll('.dot');
 dots[0].classList.add('dot_selected');
 
+// Fonction pour mettre à jour la bannière
+function updateBanner() {
+	bannerImage.src = './assets/images/slideshow/' + slides[index].image;
+	bannerText.innerHTML = slides[index].tagLine;
 
-// Sélectionner les flèches gauche et droite
-const arrowLeft = document.querySelector(".arrow_left");
-const arrowRight = document.querySelector(".arrow_right");
+	// Mettre à jour le bullet point actif
+	dots.forEach((dot, dotIndex) => {
+		dot.classList.remove('dot_selected');
+		if (dotIndex === index) {
+			dot.classList.add('dot_selected');
+		}
+	});
+}
+let index = 0;
+// Fonction pour passer au slide suivant
+function nextSlide() {
+	index = index + 1
+	if (index >= slides.length) {
+		// nous mettons à jour l'index avec le premier slide (index 0)
+		index = 0;
+	}
+	updateBanner();
+}
 
-// Ajoute EventListener sur la flèche gauche
-arrowLeft.addEventListener("click", () => {
-	console.log("Flèche gauche cliquée !");
+// Fonction pour passer au slide précédent
+function previousSlide() {
+	index = index - 1
+	if (index < 0) {
+		// Mise à jour de l'index avec le dernier slide
+		index = slides.length - 1;
+	}
+	updateBanner();
+}
 
+// Ajouter EventListener sur la flèche gauche
+const arrowLeft = banner.querySelector('.arrow_left');
+arrowLeft.addEventListener('click', () => {
+	console.log('Flèche gauche cliquée !');
+	previousSlide();
 });
 
-// Ajoute EventListener sur la flèche gauche
-arrowRight.addEventListener("click", () => {
-	console.log("Flèche droite cliquée !");
+// Ajouter EventListener sur la flèche droite
+const arrowRight = banner.querySelector('.arrow_right');
+arrowRight.addEventListener('click', () => {
+	console.log('Flèche droite cliquée !');
+	nextSlide();
 });
