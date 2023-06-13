@@ -29,11 +29,20 @@ const bannerText = banner.querySelector('p');
 // Sélectionner le conteneur des points
 const dotContainer = banner.querySelector('.dots');
 
+const dot = document.querySelectorAll('.dot');
+
 // Ajoute les points (bullets)
 for (let dot = 0; dot < slides.length; dot = dot + 1) {
 	const span = document.createElement('span');
 	span.classList.add('dot');
 	dotContainer.appendChild(span);
+	//rend les bullet points cliquable
+	// Ajouter un écouteur d'événements de clic à chaque point
+	span.addEventListener('click', () => {
+		// Mettre à jour l'index avec l'index du point cliqué
+		index = dot;
+		updateBanner();
+	});
 }
 
 // Sélection du premier point comme point sur slider en cours
@@ -53,6 +62,7 @@ function updateBanner() {
 		}
 	});
 }
+
 let index = 0;
 // Fonction pour passer au slide suivant
 function nextSlide() {
